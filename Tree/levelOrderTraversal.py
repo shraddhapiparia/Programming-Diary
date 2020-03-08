@@ -8,6 +8,8 @@ from collections import deque
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
         queue, level, levels = deque([root,]), 0, []
+        if not root:
+            return levels
         while queue:
             levels.append([])
             for i in range(len(queue)):
@@ -17,6 +19,6 @@ class Solution:
                     queue.append(n.left)
                 if n.right:
                     queue.append(n.right)
-            print(level,levels[level])
+            #print(level,levels[level])
             level += 1
         return levels
