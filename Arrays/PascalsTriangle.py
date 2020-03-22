@@ -1,16 +1,17 @@
-def pascalsTriangle(rows):
-    if rows == 0:
-        print("Atleast one row is needed")
-    arr = [[1]]
-    for i in range(rows - 1):
-        prev = arr[-1]
-        next = [1]
-        for j in range(len(prev) -1):
-            next.append(prev[j] + prev[j+1])
-        next.append(1)
-        arr.append(next)
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        out = [[1]]
+        if numRows == 0:
+            return None
+        for i in range(numRows-1):
+            row = [1]
+            prev = out[-1]
+            for j in range(len(prev)-1):
+                row.append(prev[j] + prev[j+1])
+            row.append(1)
+            out.append(row)
         
-    print(arr)
+    print(out)
     
 pascalsTriangle(4)
 
