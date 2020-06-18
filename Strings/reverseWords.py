@@ -4,6 +4,7 @@
 # Input: "Let's take LeetCode contest"
 # Output: "s'teL ekat edoCteeL tsetnoc"
 
+# WORST SOLUTION EVER
 class Solution:
     def reverseWords(self, s: str) -> str:
         start, newstr = 0, ""
@@ -20,3 +21,13 @@ class Solution:
         for idx in reversed(range(start,last)):
             newstr += s[idx]
         return newstr
+    
+# Improved solution
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        start, newstr = 0, ""
+        if not s:
+            return s
+        for n in s.split(" "):
+            newstr += n[::-1] + " "
+        return newstr[:-1]
