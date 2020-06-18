@@ -31,3 +31,8 @@ class Solution:
         for n in s.split(" "):
             newstr += n[::-1] + " "
         return newstr[:-1]
+
+# One liner
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        return " ".join([i[::-1] for i in s.split()])
