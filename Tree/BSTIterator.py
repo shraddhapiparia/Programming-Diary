@@ -45,3 +45,36 @@ class BSTIterator:
 # obj = BSTIterator(root)
 # param_1 = obj.next()
 # param_2 = obj.hasNext()
+
+# Above algo has O(N) space complexity and hasnext and next has O(1) time complexity. Optimizing space to O(h) in next solution where h is height of tree.
+
+class BSTIterator:
+
+    def __init__(self, root: TreeNode):
+        self.stack = []
+        self.leftIterator(root)
+        
+    def leftIterator(self, node):
+        while node:
+            self.stack.append(node)
+            node = node.left
+        
+
+    def next(self) -> int:
+        n = self.stack.pop()
+        
+        if n.right:
+            self.leftIterator(n.right)
+        
+        return n.val
+        
+
+    def hasNext(self) -> bool:
+        return len(self.stack)
+        
+
+
+# Your BSTIterator object will be instantiated and called as such:
+# obj = BSTIterator(root)
+# param_1 = obj.next()
+# param_2 = obj.hasNext()
