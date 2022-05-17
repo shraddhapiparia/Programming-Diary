@@ -24,6 +24,7 @@ class Solution:
                 val.append(i)
         return(val)
 
+# A little more efficient solution
 class Solution:
     def targetIndices(self, nums: List[int], target: int) -> List[int]:
         n_lower = n_target = 0
