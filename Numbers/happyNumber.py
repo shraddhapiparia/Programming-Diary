@@ -18,3 +18,19 @@ class Solution:
  # tarting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until 
  # the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this 
  # process ends in 1 are happy numbers.
+
+# Solution 2:
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        slow, fast = n, n
+        while True:
+            slow = sum(int(c)**2 for c in str(slow))
+            fast = sum(int(c)**2 for c in str(fast))
+            fast = sum(int(c)**2 for c in str(fast))
+            
+            if slow == 1 or fast == 1:
+                return True
+            elif slow == fast:
+                return False
+        return True
+# First solution seems mroe effective than above but this one has TC of O(n)
