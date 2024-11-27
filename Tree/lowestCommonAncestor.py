@@ -23,44 +23,33 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
 class Solution:
+    def findAncestors(self, parent, node) -> Dict['TreeNode', int]:
+        ancestors, level = {}, 1
+        while node:
+            ancestors[node] = level
+            level += 1
+            node = parent[node]
+        return ancestors
+
     def lowestCommonAncestor(self, root: 'TreeNode', nodes: 'List[TreeNode]') -> 'TreeNode':
         if len(nodes) == 1:
             return nodes[0]
-
-        parent = {root: None}
-        stack = [root]
-
+        # Create parent dictionary to reference later    
+        parent, stack = {root: None}, [root]
         while stack:
-            curr = stack.pop()
-            if curr.left:
-                parent[curr.left] = curr
-                stack.append(curr.left)
-            if curr.right:
-                parent[curr.right] = curr
-                stack.append(curr.right)
-
-        def find_ancestors(node):
-            ancestors = {}
-            level = 1
-            while node:
-                ancestors[node] = level  # Store the node itself as the key
-                level += 1
-                node = parent[node]
-            return ancestors
-
-        common_ancestors = find_ancestors(nodes[0])
-
+            node = stack.pop()
+            if node.left:
+                stack.append(node.left)
+                parent[node.left] = node
+            if node.right:
+                stack.append(node.right)
+                parent[node.right] = node
+        # Find all ancestors of first node in nodes and store common ones in common_ancestors
+        common_ancestors = self.findAncestors(parent, nodes[0])
         for node in nodes[1:]:
-            current_ancestors = find_ancestors(node)
-            common_ancestors = {key: common_ancestors[key] for key in common_ancestors if key in current_ancestors}
+            node_ancestor = self.findAncestors(parent, node)
+            common_ancestors = {key: common_ancestors[key] for key in common_ancestors if key in node_ancestor}
 
-        ancestors_list = find_ancestors(nodes[0])
-
-        for ancestor, level in sorted(ancestors_list.items(), key=lambda x: x[1], reverse=False):
-            if ancestor in common_ancestors:
-                return ancestor
-
-        return None
-      # Above code very slow; work on recursive solution
+        # Return the lowest common ancestor by level
+        return min(common_ancestors, key=common_ancestors.get)
