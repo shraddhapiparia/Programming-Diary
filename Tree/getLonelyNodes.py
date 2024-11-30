@@ -47,20 +47,35 @@ class Solution:
                     stack.append(curr.right)
         return lonely_nodes
 
-# RECURSIVE SOLUTION
+# SImilar to above with less ifs:
 class Solution:
     def getLonelyNodes(self, root: Optional[TreeNode]) -> List[int]:
-        self.lonely_nodes = []
+        stack, lonely_nodes = [root],[]
+        while stack:
+            curr = stack.pop()
+            if curr.left and curr.right:
+                stack.append(curr.left)
+                stack.append(curr.right)
+            elif curr.left:
+                lonely_nodes.append(curr.left.val)
+                stack.append(curr.left)
+            elif curr.right:
+                lonely_nodes.append(curr.right.val)
+                stack.append(curr.right)
+        return lonely_nodes
 
-        def dfs(node):
+# RECURSIVE SOLUTION
+class Solution:
+    def dfs(self,node):
             if node.left and not node.right:
                 self.lonely_nodes.append(node.left.val)
             if node.right and not node.left:
                 self.lonely_nodes.append(node.right.val)
             if node.left:
-                dfs(node.left)
+                self.dfs(node.left)
             if node.right:
-                dfs(node.right)
-        
-        dfs(root)
+                self.dfs(node.right)
+    def getLonelyNodes(self, root: Optional[TreeNode]) -> List[int]:
+        self.lonely_nodes = []
+        self.dfs(root)
         return self.lonely_nodes
